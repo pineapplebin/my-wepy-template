@@ -1,0 +1,15 @@
+<template>
+  <view>hello world</view>
+</template>
+
+<style lang="less" scoped></style>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class extends wepy.page {
+    data = {
+
+    }
+  }
+</script>

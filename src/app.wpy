@@ -1,0 +1,39 @@
+<style lang="less">
+  .container {
+  }
+</style>
+
+<script>
+  import wepy from 'wepy'
+  import 'wepy-async-function'
+  import './main'
+  import { logger } from './tools/utils/logger'
+
+  export default class extends wepy.app {
+    config = {
+      pages: [
+        'pages/index',
+        // 'pages/test',
+      ],
+      window: {
+        backgroundTextStyle: 'light',
+        navigationBarBackgroundColor: '#fff',
+        navigationBarTitleText: 'WeChat',
+        navigationBarTextStyle: 'black'
+      }
+    }
+
+    globalData = {}
+
+    constructor () {
+      super()
+      this.use('promisify')
+      this.use('requestfix')
+    }
+
+    onLaunch () {
+      logger.log(new logger.Style('hello world').color('blue').fontWeight('lighter'))
+      this.$$api.user().then(console.log)
+    }
+  }
+</script>

@@ -1,0 +1,89 @@
+<template>
+  <view id="index">
+    <view class="container {{ selected !== null ? 'selected' : '' }}">
+      <view wx:for="{{ 5 }}" wx:key="{{ index }}" wx:index="{{ index }}" wx:item="{{ item }}"
+            class="block {{ selected === index ? 'selected' : '' }}" @tap="clickBlock({{ index }})">
+        <view class="inner"
+              style="background: {{ ['orangered', 'yellow', 'darkturquoise', 'dodgerblue', 'mediumpurple'][index] }}"></view>
+      </view>
+    </view>
+    <button @tap="clickButton" style="margin: 30px;">click</button>
+  </view>
+</template>
+
+<style lang="less" scoped>
+  .container {
+    width: 100vw;
+    height: ~'500rpx';
+    display: flex;
+    position: relative;
+
+    .block {
+      position: absolute;
+      top: 0;
+      width: 20vw;
+      height: ~'500rpx';
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      transition: width .5s, opacity .5s, left .5s ease .5s, transform .5s;
+      will-change: width, opacity, transform;
+
+      .inner {
+        width: 100vw;
+        height: 100%;
+      }
+
+      &:nth-child(1) { left: 0; }
+      &:nth-child(2) { left: 20vw; }
+      &:nth-child(3) { left: 40vw; }
+      &:nth-child(4) { left: 60vw; }
+      &:nth-child(5) { left: 80vw; }
+    }
+
+    &.selected {
+
+      .block.selected {
+        z-index: 10;
+        width: 100vw;
+        left: 0;
+        transition: width .5s ease .5s, opacity .5s, left .5s, transform .5s;
+      }
+
+      .block:not(.selected) {
+        transform: scale(.3, .3);
+        opacity: 0;
+      }
+    }
+  }
+</style>
+
+<script>
+  import wepy from 'wepy'
+  import { connectDirector } from '../tools/animation'
+
+  @connectDirector()
+  export default class extends wepy.page {
+    data = {
+      selected: null,
+    }
+
+    methods = {
+      clickBlock (idx) {
+        console.log(idx)
+        this.showBlock(idx)
+      },
+      clickButton () {
+        console.log('click')
+        this.showBlock(null)
+      }
+    }
+
+    showBlock (idx) {
+      this.selected = idx
+      this.$apply()
+    }
+  }
+</script>
