@@ -20,9 +20,9 @@ export function isLoginPage (login_action = null) {
       if (!_login_state.is_logined) {
         if (!_login_state.login_action)
           throw Error('need invoke configLoginAction(fn) before')
-        await _login_state.login_action()
+        await _login_state.login_action.call(this)
         if (typeof login_action === 'function')
-          await login_action()
+          await login_action.call(this)
 
         _login_state.is_logined = true
       }
